@@ -1,0 +1,85 @@
+{% extends 'MytestTableBundle::base.html.twig' %}
+
+{% block css %}
+    <link  href="{{ asset('bundles/testTable/css/add_status.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+   <div class="add-status clearfix">
+    <div class="left">
+        {% block sidebar %}
+            <label class="select-status">
+                <select id="select">
+                    <option disabled selected style='display:none;'>select a status</option>
+                    <option>Check-In</option>
+                    <option>Notify</option>
+                    <option>Assign-owner</option>
+                    <option>Repair-In</option>
+                    <option>Ship-to-Factory</option>
+                    <option>Ship-to-Customer</option>
+                    <option>Ship-Out</option>
+                </select>
+            </label>
+        {% endblock %}
+    </div>
+    <div class="right">
+        {% block maincontent %}
+            <div class="status-info" id="status-info">
+
+            </div>
+        {% endblock %}
+    </div>
+
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            var status_info = $('#status-info');
+            var s = $('#select');
+            var status = s.val();
+
+            s.change(function () {
+                var status = s.val();
+
+                var url = window.location.pathname;
+                var current_id = url.split('/addStatus/')[1].split('/')[0];
+
+                var url1 = "{{ path('addStatus',{'main_id': 'text1','status': 'text2'}) }}";
+                url1 = url1.replace('text1',current_id);
+                url1 = url1.replace('text2',status);
+                var temp = url1.split('?status=');
+                var url2 = temp[0]+'/'+temp[1];
+                console.log(url2);
+
+                $.ajax({
+                    url: url2,
+                    async: false,
+                    success: function (html) {
+                        console.log(html);
+                        status_info.empty();
+                        status_info.append(html);
+                    }
+                });
+                var $form = $('form').eq(0);
+                $form.attr('action',url2);
+                $form.attr('id', 'form_status');
+            });
+
+            // 表单验证
+            $('#addRecord').validate({
+                rules:{
+
+                },
+                messages:{
+                    current_date:{
+                        required: "请选择收货日期"
+                    }
+                }
+            });
+
+
+        })
+    </script>
+{% endblock %}

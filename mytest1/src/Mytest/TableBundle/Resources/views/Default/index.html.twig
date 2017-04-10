@@ -1,0 +1,147 @@
+{% extends 'MytestTableBundle::base.html.twig' %}
+
+    {% block css %}
+        <link  href="{{ asset('bundles/testTable/css/index.css') }}" rel="stylesheet">
+    {% endblock %}
+
+{% block sidebar %}
+    <div class="option">
+        <button class="btn btn-info" id="btn-add-main">
+            <a href="{{ path('addTask') }}">Create New</a>
+        </button>
+    </div>
+{% endblock %}
+
+{% block maincontent %}
+    <div class="main-show" id="main-show">
+        {% block switchcontent %}
+            <div id="warp">
+                <div class="main-table">
+                    <table class="table table-bordered table-hover table-striped" id="main-table">
+                        <tr>
+                            <th>option</th>
+                            <th>No.</th>
+                            <th>SR</th>
+                            <th>RMA</th>
+                            <th>JDE</th>
+                            <th>P/N</th>
+                            <th>S/N</th>
+                            <th>Status</th>
+                            <th>date</th>
+                            <th>Owner</th>
+                            <th>Customer Name</th>
+                            <th>Customer Address</th>
+                            <th>Customer Number</th>
+                            <th>Physical Damaged</th>
+                            <th>link_img</th>
+                            <th>Assigned Owner</th>
+                            <th>AWB</th>
+                        </tr>
+                        {% for i in table %}
+                            <tr>
+                                <td>
+                                    <button class="btn">修改</button>
+                                    <button class="btn">统计</button>
+                                </td>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.sr }}</td>
+                                <td>{{ i.rma }}</td>
+                                <td>{{ i.jde }}</td>
+                                <td>{{ i.pn }}</td>
+                                <td>{{ i.sn }}</td>
+                                <td>{{ i.sub[0].status }}</td>
+                                <td>{{ i.sub[0].date }}</td>
+                                <td>{{ i.sub[0].owner }}</td>
+                                <td>{{ i.customer_name }}</td>
+                                <td>{{ i.customer_address }}</td>
+                                <td>{{ i.customer_number }}</td>
+                                <td>{{ i.physical_damaged }}</td>
+                                <td>{{ i.linked_img }}</td>
+                                <td>{{ i.assigned_owner }}</td>
+                                <td>{{ i.awb }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="sub-table" id="sub-table">
+                    <p>
+                        <button class="btn btn-info">
+                            <a href="" id="btn-add-sub">Add Status</a>
+                        </button>
+                    </p>
+
+                    <table class="table table-bordered table-hover" id="sub-table1">
+                        <tr>
+                            <th>Status</th>
+                            <th>date</th>
+                            <th>Owner</th>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    $(function () {
+        var main_table = $('#main-table');
+        var sub_table1 = $('#sub-table1');
+        var add_sub = $('#btn-add-sub');
+        var table_json = {{ table|json_encode|raw }};
+      //  console.log(table_json)
+        var trs = main_table.find('tr');
+        var current_id = trs.length - 1;
+
+        var url = "{{ path('addStatus',{'main_id': 'current_id'}) }}";
+       // var url = "{{ path('addStatus',{'main_id': 'current_id','status': 'Check-In'}) }}";
+        url = url.replace("current_id", current_id);
+        add_sub.attr("href",url);
+
+        // 初始化子表
+        var l = table_json[0].sub.length;
+        for(var i = 0; i < l; i ++){
+            var add_tr = '<tr>'
+                +'<td>'+table_json[0].sub[i].status+'</td>'
+                +'<td>'+table_json[0].sub[i].date+'</td>'
+                +'<td>'+table_json[0].sub[i].owner+'</td>'
+                +'</tr>';
+            sub_table1.append(add_tr);
+        }
+
+        for(var j = 1; j < trs.length; j++){
+            trs[j].onclick = (function (j) {
+                return function () {
+                    sub_table1.empty();
+                    var str1 = ' <tr> <th>Status</th> <th>date</th> <th>Owner</th> </tr>';
+                    sub_table1.append(str1);
+
+                    // 渲染子表
+                    var n = trs[j].getElementsByTagName('td')[1].innerText;
+                    var k = trs.length - 1 - n;
+                   var l = table_json[k].sub.length;
+                    for(var i = 0; i < l; i ++){
+                        var add_tr = '<tr>'
+                            +'<td>'+table_json[k].sub[i].status+'</td>'
+                            +'<td>'+table_json[k].sub[i].date+'</td>'
+                            +'<td>'+table_json[k].sub[i].owner+'</td>'
+                            +'</tr>';
+                        sub_table1.append(add_tr);
+                        current_id = table_json[k].id;
+
+                        var url = "{{ path('addStatus',{'main_id': 'current_id'}) }}";
+                        url = url.replace("current_id", current_id);
+                        add_sub.attr("href",url);
+                        console.log(url);
+                    }
+                }
+            })(j)
+        }
+
+    });
+</script>
+{% endblock %}
+

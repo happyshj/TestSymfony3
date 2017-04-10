@@ -1,0 +1,38 @@
+{#{{ id }}#}
+
+
+
+{#status:{{ status }}#}
+{#owner:{{ owner }}#}
+{#date:{{ date }}#}
+{#main_id:{{ main_id }}#}
+{#{% for i in table %}#}
+    {#id:{{ i.id }}#}
+    {#<br>#}
+    {#sr:{{ i.sr }}#}
+    {#<br>#}
+    {#rma:{{ i.rma }}#}
+    {#<br>#}
+    {#jde:{{ i.jde }}#}
+    {#<br>#}
+    {#pn:{{ i.pn }}#}
+    {#<br>#}
+    {#sn:{{ i.sn }}#}
+    {#<br>#}
+    {#customer_name:{{ i.customer_name }}#}
+    {#<br>#}
+    {#customer_address:{{ i.customer_address }}#}
+    {#<br>#}
+    {#customer_number:{{ i.customer_number }}#}
+    {#<br>#}
+    {#{% for j in i.sub %}#}
+        {#status:{{ j.status }}#}
+        {#<br>#}
+        {#owner:{{ j.owner }}#}
+        {#<br>#}
+        {#date:{{ j.date }}#}
+    {#{% endfor %}#}
+    {#status:{{ i.sub[0].status }}#}
+    {#<br>#}
+    {#<br>#}
+{#{% endfor %}#}

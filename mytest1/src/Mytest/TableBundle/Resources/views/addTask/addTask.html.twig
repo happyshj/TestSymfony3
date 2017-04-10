@@ -1,0 +1,51 @@
+{% extends 'MytestTableBundle:Default:index.html.twig' %}
+
+{% block css %}
+    {{ parent() }}
+    <link  href="{{ asset('bundles/testTable/css/add_task.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block switchcontent %}
+    <div class="add-Record">
+        {{ form_start(form) }}
+
+        <div>
+            {{ form_label(form.status) }}
+            {{ form_errors(form.status) }}
+            {{ form_widget(form.status) }}
+        </div>
+
+        <div>
+            {{ form_label(form.owner) }}
+            {{ form_errors(form.owner) }}
+            {{ form_widget(form.owner) }}
+        </div>
+        <div>
+            {{ form_label(form.date) }}
+            {{ form_errors(form.date) }}
+            {{ form_widget(form.date) }}
+        </div>
+        <div>
+            {{ form_label(form.maint.customer_name) }}
+            {{ form_errors(form.maint.customer_name) }}
+            {{ form_widget(form.maint.customer_name) }}
+        </div>
+        <div>
+            {{ form_label(form.maint.customer_address) }}
+            {{ form_errors(form.maint.customer_address) }}
+            {{ form_widget(form.maint.customer_address) }}
+        </div>
+        <div>
+            {{ form_label(form.maint.customer_number) }}
+            {{ form_errors(form.maint.customer_number) }}
+            {{ form_widget(form.maint.customer_number) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

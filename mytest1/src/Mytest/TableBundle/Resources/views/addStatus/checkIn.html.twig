@@ -1,0 +1,51 @@
+ {{ form_start(form, {'action': ''}) }}
+
+<div>
+    {{ form_label(form.status) }}
+    {{ form_errors(form.status) }}
+    {{ form_widget(form.status) }}
+</div>
+
+<div>
+    {{ form_label(form.owner) }}
+    {{ form_errors(form.owner) }}
+    {{ form_widget(form.owner) }}
+</div>
+<div>
+    {{ form_label(form.date) }}
+    {{ form_errors(form.date) }}
+    {{ form_widget(form.date) }}
+</div>
+<div>
+    {{ form_label(form.maint.sr) }}
+    {{ form_errors(form.maint.sr) }}
+    {{ form_widget(form.maint.sr) }}
+</div>
+<div>
+    {{ form_label(form.maint.rma) }}
+    {{ form_errors(form.maint.rma) }}
+    {{ form_widget(form.maint.rma) }}
+</div>
+<div>
+    {{ form_label(form.maint.jde) }}
+    {{ form_errors(form.maint.jde) }}
+    {{ form_widget(form.maint.jde) }}
+</div>
+<div>
+    {{ form_label(form.maint.sn) }}
+    {{ form_errors(form.maint.sn) }}
+    {{ form_widget(form.maint.sn) }}
+</div>
+<div>
+    {{ form_label(form.maint.pn) }}
+    {{ form_errors(form.maint.pn) }}
+    {{ form_widget(form.maint.pn) }}
+</div>
+ <div>
+     {{ form_label(form.maint.linked_img) }}
+     {{ form_errors(form.maint.linked_img) }}
+     {{ form_widget(form.maint.linked_img) }}
+ </div>
+
+{{ form_end(form) }}
+

@@ -1,0 +1,5 @@
+mytest_table:
+    resource: "@MytestTableBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

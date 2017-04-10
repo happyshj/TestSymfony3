@@ -1,0 +1,25 @@
+ {{ form_start(form, {'action': ''}) }}
+
+<div>
+    {{ form_label(form.status) }}
+    {{ form_errors(form.status) }}
+    {{ form_widget(form.status) }}
+</div>
+
+<div>
+    {{ form_label(form.owner) }}
+    {{ form_errors(form.owner) }}
+    {{ form_widget(form.owner) }}
+</div>
+<div>
+    {{ form_label(form.date) }}
+    {{ form_errors(form.date) }}
+    {{ form_widget(form.date) }}
+</div>
+<div>
+    {{ form_label(form.maint.awb) }}
+    {{ form_errors(form.maint.awb) }}
+    {{ form_widget(form.maint.awb) }}
+</div>
+{{ form_end(form) }}
+
